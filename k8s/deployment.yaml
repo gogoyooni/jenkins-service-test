@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: line-app
+  template:
+    metadata:
+      labels:
+        app: line-app
+    spec:
+      containers:
+      - name: line-app
+        image: ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:latest
+        ports:
+        - containerPort: 3000
