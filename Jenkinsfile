@@ -21,10 +21,13 @@ pipeline {
                       mountPath: /kaniko/.docker/
                   - name: kubectl
                     image: bitnami/kubectl:latest
-                    command: ['cat']
+                    command:
+                    - sleep
                     args:
-                    - "3600"
+                    - 99d
                     tty: true
+                    securityContext:
+                      runAsUser: 1000
                   volumes:
                   - name: docker-config
                     secret:
