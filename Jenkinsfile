@@ -1,6 +1,7 @@
 pipeline {
     agent {
         kubernetes {
+            label 'test-1-agent'
             yaml '''
                 kind: Pod
                 metadata:
