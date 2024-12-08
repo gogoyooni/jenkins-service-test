@@ -63,7 +63,7 @@ pipeline {
                             /kaniko/executor \
                             --context=${WORKSPACE} \
                             --dockerfile=${WORKSPACE}/Dockerfile \
-                            --destination=${DOCKER_IMAGE}:latest
+                            --destination=${DOCKER_IMAGE}:${DOCKER_TAG}
                         '''
                     }
                 }
