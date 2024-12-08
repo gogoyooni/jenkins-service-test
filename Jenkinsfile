@@ -75,10 +75,19 @@ pipeline {
                 container('kubectl') {
                     script {
                         sh """
-                            echo "Starting deployment..."
+                            echo "Cleaning up existing deployment..."
+                            kubectl delete deployment line-app -n test-1-namespace --ignore-not-found=true
+                            
+                            echo "Waiting for pods to terminate..."
+                            kubectl wait --for=delete pod -l app=line-app -n test-1-namespace --timeout=60s || true
+                            
+                            echo "Starting new deployment..."
                             sed -i 's|\${DOCKER_IMAGE}|${DOCKER_IMAGE}|g' k8s/deployment.yaml
                             sed -i 's|\${DOCKER_TAG}|${DOCKER_TAG}|g' k8s/deployment.yaml
                             kubectl apply -f k8s/deployment.yaml -n test-1-namespace
+                            
+                            echo "Waiting for new deployment to be ready..."
+                            kubectl rollout status deployment/line-app -n test-1-namespace
                         """
                     }
                 }
