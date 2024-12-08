@@ -21,8 +21,7 @@ pipeline {
                       mountPath: /kaniko/.docker/
                   - name: kubectl
                     image: bitnami/kubectl:latest
-                    command:
-                    - sleep
+                    command: ['cat']
                     args:
                     - "3600"
                     tty: true
