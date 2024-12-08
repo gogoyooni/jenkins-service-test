@@ -1,7 +1,9 @@
 pipeline {
     agent {
         kubernetes {
-            label 'test-1-agent'
+            cloud 'kubernetes'
+            inheritFrom 'test-1-agent'
+            serviceAccount 'test-1-sa' 
             yaml '''
                 kind: Pod
                 metadata:
